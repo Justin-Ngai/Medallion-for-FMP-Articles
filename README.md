@@ -14,5 +14,4 @@ Why semi-structured data? This is a balance between LLMs (unlike previous NLP) b
 - Notebook that puts data into dataframe, uses small language model to add more context
 
 **To do**
-- Review cleaning
-- Create agent that answers questions
+- Create Bedrock agent that answers questions
