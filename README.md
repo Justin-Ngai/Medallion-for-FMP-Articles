@@ -1,4 +1,4 @@
-# FMP-semi-structured
+# Semi-structured data from Financial Modeling Prep
 
 This repo is to record the development of a lakehouse on AWS that uses Financial Modeling Prep (FMP) data. The data will be semi-structured, AI agents will enhance it with metadata for other AI applications, and AI agents can answer questions about the articles.
 
