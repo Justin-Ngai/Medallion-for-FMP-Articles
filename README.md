@@ -1,7 +1,7 @@
 # Medallion Architecture for Extracting Alpha Signals from Financial News Articles
 
 The purpose of this project is to build a production-ready medallion architecture that extracts alpha signals from Financial Modeling Prep (FMP) news articles. During the development, I learn about:
-- Production features for AWS Lambda functions
+- Various ingestion methods (already built with Lambda, comparing with Airflow)
 - Developing with AWS SageMaker Lakehouse and calling data agents. How this compares to Microsoft Fabric and Databricks - both of which I'm certified for.
 - Reorganizing data for a semantic layer that financial analysts can query from
 
