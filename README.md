@@ -4,9 +4,9 @@ This repo is to record the development of a lakehouse on AWS that uses Financial
 
 **Q&A**
 
-**Why FMP? **It’s used by credible organizations such as Citadel and Harvard.
+**Why FMP?** It’s used by credible organizations such as Citadel and Harvard.
 
-**Why semi-structured data? **This is a balance between LLMs (unlike previous NLP) being better at handling text, and DW methodologies being built primarily on structured data.
+**Why semi-structured data?** This is a balance between LLMs (unlike previous NLP) being better at handling text, and DW methodologies being built primarily on structured data.
 
 **Developments**
 	•	Built a Lambda function that gets FMP news articles and writes them to an S3 bucket
