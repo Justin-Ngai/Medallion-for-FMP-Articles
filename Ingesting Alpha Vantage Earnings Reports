@@ -1,1 +1,66 @@
+import json
+import urllib3
+import boto3
+import os
+from datetime import datetime
 
+secrets_client = boto3.client("secretsmanager")
+
+def get_api_key():
+    response = secrets_client.get_secret_value(
+        SecretId='arn:aws:secretsmanager:us-east-1:629904435132:secret:dev/alpha_vantage-wbLVgz'
+    )
+    secret = json.loads(response["SecretString"])
+    return secret["FreeApiKey"]
+
+http = urllib3.PoolManager()
+
+def lambda_handler(event, context):
+
+    symbol = event.get("symbol", "IBM") #test this
+    apikey = get_api_key() #apikey = '0O60RCBLDM5ENVSY'
+    url = (
+        "https://www.alphavantage.co/query"
+        "?function=EARNINGS_CALL_TRANSCRIPT"
+        "&symbol=" + symbol + 
+        "&quarter=2024Q1"
+        "&apikey=" + apikey
+    )
+
+    response = http.request("GET", url)
+    data = json.loads(response.data.decode("utf-8"))
+
+    return {
+        "statusCode": 200,
+        "body": data
+    }
+    raise Exception('Something went wrong')
+
+# Initialize S3 and HTTP client outside handler for connection reuse
+s3 = boto3.client('s3')
+
+def (event, context):
+    # 1. Configuration
+    bucket_name = 'raw-us-east-1-jngai-dev' #os.environ.get('S3_BUCKET_NAME')
+    
+    # 3. Save to S3
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    file_name = f"fmp_articles_{timestamp}.json"
+    
+    try:
+        s3.put_object(
+            Bucket=bucket_name,
+            Key=file_name,
+            Body=json.dumps(data),
+            ContentType='application/json'
+        )
+        print(f"Success: Saved to s3://{bucket_name}/{file_name}")
+        
+    except Exception as e:
+        print(f"S3 Upload Exception: {str(e)}")
+        return {'statusCode': 500, 'body': f"Error uploading to S3: {str(e)}"}
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(f"Saved {len(data)} articles to {file_name}")
+    }
