@@ -1,22 +1,22 @@
 name: Deploy SAM App
 
-on:
+on: 
   push:
-    branches:
+    branches: 
       - main
 
-jobs:
+jobs: 
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version:  "3.11"
 
       - name: Install AWS SAM CLI
         run: |
@@ -35,4 +35,4 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name medallion-financial-texts-stack
